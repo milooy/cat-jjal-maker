@@ -24,7 +24,7 @@
     }
   </style>
   <body>
-    <h1>1번째 고양이 가라사대</h1>
+    <!-- <h1>1번째 고양이 가라사대</h1>
     <form>
       <input placeholder="영어 대사를 입력해주세요" />
       <button>생성</button>
@@ -35,7 +35,7 @@
         width="400"
         alt="고양이"
       />
-      <!-- <button>🤍</button> -->
+      <button>🤍</button>
     </div>
     <ul class="favorite">
       <li>
@@ -66,7 +66,8 @@
           alt="고양이"
         />
       </li>
-    </ul>
+    </ul> -->
+    <div id="app"></div>
 
     <script src="./resources/utils.js"></script>
     <script
@@ -89,6 +90,29 @@
           🤍
         </button>
       );
+
+      const favorite = (
+        <ul class="favorite">
+          <li>
+            <img
+              src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
+              width="150"
+              alt="고양이"
+            />
+          </li>
+        </ul>
+      );
+
+      const Foo = "hello";
+
+      const app = (
+        <div>
+          {likeButton}
+          {favorite}
+        </div>
+      );
+
+      ReactDOM.render(app, document.getElementById("app"));
 
       // const likeButton = document.querySelector(".main-card button");
       // console.log(likeButton);
