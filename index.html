@@ -70,7 +70,11 @@
 
     <script src="./resources/utils.js"></script>
     <script type="text/javascript">
-      console.log("hello world");
+      const likeButton = document.querySelector(".main-card button");
+      console.log(likeButton);
+      likeButton.addEventListener("click", function () {
+        likeButton.innerHTML = "💖";
+      });
     </script>
   </body>
 </html>
