@@ -35,7 +35,7 @@
         width="400"
         alt="고양이"
       />
-      <button>🤍</button>
+      <!-- <button>🤍</button> -->
     </div>
     <ul class="favorite">
       <li>
@@ -69,12 +69,32 @@
     </ul>
 
     <script src="./resources/utils.js"></script>
-    <script type="text/javascript">
-      const likeButton = document.querySelector(".main-card button");
-      console.log(likeButton);
-      likeButton.addEventListener("click", function () {
-        likeButton.innerHTML = "💖";
-      });
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      const likeButton = (
+        <button
+          onClick={function () {
+            console.log("클릭했습니다.");
+          }}
+        >
+          🤍
+        </button>
+      );
+
+      // const likeButton = document.querySelector(".main-card button");
+      // console.log(likeButton);
+      // likeButton.addEventListener("click", function () {
+      //   likeButton.innerHTML = "💖";
+      // });
     </script>
   </body>
 </html>
