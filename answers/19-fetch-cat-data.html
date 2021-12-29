@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>고양이 가라사대</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      .main-card button {
+        position: relative;
+        left: -45px;
+        bottom: 15px;
+      }
+      .favorites {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="../resources/utils.js"></script>
+
+    <script type="text/babel">
+      function FavoriteCard(props) {
+        const CardStyle = { width: "150px" };
+        return (
+          <li>
+            <img src={props.image} alt="고양이" style={CardStyle} />
+          </li>
+        );
+      }
+
+      function Favorites({ favorites }) {
+        if (favorites.length === 0) {
+          return <div>사진 위 하트를 눌러 고양이 사진을 저장해봐요!</div>
+        }
+        return (
+          <ul className="favorites">
+            {favorites.map((favorite) => (
+              <FavoriteCard image={favorite} key={favorite} />
+            ))}
+          </ul>
+        );
+      }
+
+      const Title = (props) => {
+        return <h1>{props.children}</h1>;
+      };
+
+      const Form = ({ onSubmit }) => {
+        const error = false;
+        const [value, setValue] = React.useState("");
+        const [errorMessage, setErrorMessage] = React.useState("");
+        const handleInputChange = (e) => {
+          setErrorMessage('')
+          const text = e.target.value;
+          if (includesHangul(text)) {
+            setErrorMessage("한글은 입력할 수 없습니다.");
+          }
+          setValue(e.target.value);
+        };
+        return (
+          <form onSubmit={onSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="영어 대사를 입력해주세요"
+              value={value}
+              style={{
+                border: error ? "1px solid red" : "1px solid #ccc",
+              }}
+              onChange={handleInputChange}
+            />
+            <button className="generate" type="submit" >
+              생성
+            </button>
+            {errorMessage !== '' && <p style={{color: 'red'}}>{errorMessage}</p>}
+          </form>
+        );
+      };
+
+      const MainCard = ({ image, onHeartClick, liked }) => {
+        return (
+          <div className="main-card">
+            <img src={image} alt="고양이" width="400" />
+            <button className="like" onClick={onHeartClick}>
+              {liked ? '💖' : '🤍'}
+            </button>
+          </div>
+        );
+      };
+
+      const COUNT_KEY = 'cat-jjal-maker-count'
+      const FAVORITES_KEY = 'cat-jjal-maker-favorites'
+
+      const App = () => {
+        const [count, setCount] = React.useState(myLocalStorage.getItem(COUNT_KEY) || 1);
+        const [mainCat, setMainCat] = React.useState(CAT1);
+        const [favorites, setFavorites] = React.useState(myLocalStorage.getItem(FAVORITES_KEY) || []);
+        const liked = favorites.includes(mainCat);
+
+        async function getCat() {
+          const cat = await fetchCat('hi');
+          console.log("고양이다", cat)
+        }
+        getCat();
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          console.log(e.target[0].value)
+          const nextCount = count + 1
+          setCount(nextCount);
+          myLocalStorage.setItem(COUNT_KEY, nextCount);
+          setMainCat(CAT2);
+        };
+
+        const handleHeartClick = () => {
+          const updatedFavorites = [...favorites, mainCat]
+          setFavorites(updatedFavorites);
+          myLocalStorage.setItem(FAVORITES_KEY, updatedFavorites);
+        };
+
+        return (
+          <div>
+            <Title>{count}번째 고양이 가라사대</Title>
+            <Form onSubmit={handleSubmit} />
+            <MainCard image={mainCat} onHeartClick={handleHeartClick} liked={liked}/>
+            <Favorites favorites={favorites} />
+          </div>
+        );
+      };
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
+
