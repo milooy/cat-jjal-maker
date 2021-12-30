@@ -62,6 +62,27 @@
     </ul>
     <script>
       console.log("야옹");
+
+      // 1. 좋아요 버튼 찾기
+      const likeButton = document.querySelector(".main-card button");
+      // 2. 좋아요 버튼 눌렀을 때 이벤트
+      likeButton.addEventListener("click", function () {
+        // 3. 하트 색 바꾸기
+        likeButton.innerHTML = "❤️";
+
+        // 4. 고양이 사진을 추가할 곳 찾기
+        const favorites = document.querySelector(".favorites");
+        // 5. 새로운 고양이 사진 만들기
+        const newFavoriteImage = document.createElement("img");
+        newFavoriteImage.src =
+          "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+        // 6. 고양이 사진을 감싸는 li태그 만들기
+        const li = document.createElement("li");
+        // 7. li태그에 고양이 사진 넣기
+        li.appendChild(newFavoriteImage);
+        // 8. 방금 만든 요소 넣기
+        favorites.appendChild(li);
+      });
     </script>
   </body>
 </html>
