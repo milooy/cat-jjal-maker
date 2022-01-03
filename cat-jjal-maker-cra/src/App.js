@@ -53,7 +53,7 @@ const Form = ({ updateMainCat }) => {
         value={value}
         onChange={handleInputChange}
       />
-      <button type="submit">생성</button>
+      <button type="submit">생성2</button>
       <p style={{ color: "red" }}>{errorMessage}</p>
     </form>
   );
