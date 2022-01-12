@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>고양이 가라사대</title>
+  </head>
+  <style>
+    body {
+      text-align: center;
+    }
+    .main-card button {
+      position: relative;
+      left: -45px;
+      bottom: 15px;
+    }
+    .favorites {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .favorites img {
+      width: 150px;
+    }
+  </style>
+  <body>
+    <h1>1번째 고양이 가라사대2</h1>
+    <form>
+      <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
+      <button type="submit">생성</button>
+    </form>
+    <div class="main-card">
+      <img
+        src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
+        alt="고양이"
+        width="400"
+      />
+      <button>🤍</button>
+    </div>
+    <ul class="favorites">
+      <li>
+        <img
+          src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
+          alt="고양이"
+        />
+      </li>
+      <li>
+        <img
+          src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
+          alt="고양이"
+        />
+      </li>
+      <li>
+        <img
+          src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
+          alt="고양이"
+        />
+      </li>
+    </ul>
+    <script>
+      console.log("야옹");
+
+      // 1. 좋아요 버튼 찾기
+      const likeButton = document.querySelector(".main-card button");
+      // 2. 좋아요 버튼 눌렀을 때 이벤트
+      likeButton.addEventListener("click", function () {
+        // 3. 하트 색 바꾸기
+        likeButton.innerHTML = "❤️";
+
+        // 4. 고양이 사진을 추가할 곳 찾기
+        const favorites = document.querySelector(".favorites");
+        // 5. 새로운 고양이 사진 만들기
+        const newFavoriteImage = document.createElement("img");
+        newFavoriteImage.src =
+          "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+        // 6. 고양이 사진을 감싸는 li태그 만들기
+        const li = document.createElement("li");
+        // 7. li태그에 고양이 사진 넣기
+        li.appendChild(newFavoriteImage);
+        // 8. 방금 만든 요소 넣기
+        favorites.appendChild(li);
+      });
+    </script>
+  </body>
+</html>
