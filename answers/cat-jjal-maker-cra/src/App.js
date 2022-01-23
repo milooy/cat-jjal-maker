@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import React from "react";
-import "./App.css";
 import Title from "./components/Title";
+import "./App.css";
 
 const jsonLocalStorage = {
   setItem: (key, value) => {
