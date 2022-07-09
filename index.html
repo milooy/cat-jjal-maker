@@ -22,46 +22,133 @@
       flex-wrap: wrap;
       gap: 15px;
     }
-    .favorites img {
-      width: 150px;
-    }
+
   </style>
   <body>
-    <h1>1번째 고양이 가라사대</h1>
-    <form>
-      <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
-      <button type="submit">생성</button>
-    </form>
-    <div class="main-card">
-      <img
-        src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
-        alt="고양이"
-        width="400"
-      />
-      <button>🤍</button>
-    </div>
-    <ul class="favorites">
-      <li>
-        <img
-          src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
-          alt="고양이"
-        />
-      </li>
-      <li>
-        <img
-          src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
-          alt="고양이"
-        />
-      </li>
-      <li>
-        <img
-          src="https://cataas.com/cat/60b73094e04e18001194a309/says/react"
-          alt="고양이"
-        />
-      </li>
-    </ul>
-    <script>
+    <div id="app"></div>    
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
       console.log("야옹");
+      const 여기다가그려 = document.querySelector('#app')
+      const jsonLocalStorage = {
+        setItem: (key, value) => {
+          localStorage.setItem(key, JSON.stringify(value));
+        },
+        getItem: (key) => {
+          return JSON.parse(localStorage.getItem(key));
+        },
+      };
+
+      function Favorites({favorites}) {
+        return (
+          <ul className="favorites">
+            {favorites.map((cat) => (<CatItem img={cat} key={cat}/>))}
+          </ul>
+        )
+      }
+
+      const MainCard = ({img, onHeartClick}) => {
+        
+        return (
+          <div className="main-card">
+            <img
+              src={img}
+              alt="고양이"
+              width="400"
+            />
+            <button onClick={onHeartClick}>🤍</button>
+          </div>
+        )
+      }
+
+      const Title = (props) => {
+        return (
+          <h1>{props.children}</h1>
+        )
+      }
+      const Form = ({updateMainCat}) => {
+        const includesHangul = (text) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(text);
+        const [value, setValue] = React.useState('');
+        const [errorMessage, setErrormessage] = React.useState('');
+
+        function handleInputChange(e) {
+          const userValue = e.target.value; 
+          setErrormessage('')
+          if(includesHangul(userValue)){
+            setErrormessage("한글은 입력할 수 없습니다.")
+          } 
+          setValue(userValue.toUpperCase());
+        }
+
+        function handleFormSubmit(e) {
+          e.preventDefault(); 
+          setErrormessage('')
+          if(value === '') {
+            setErrormessage('빈 값은 입력할 수 없습니다.')
+            return;
+          } 
+
+          updateMainCat();
+        }
+        return (
+          <form onSubmit={handleFormSubmit}>
+            <input 
+            type="text" 
+            name="name" 
+            placeholder="영어 대사를 입력해주세요"
+            value={value} 
+            onChange={handleInputChange}
+            />
+            <button type="submit">생성</button>
+            <p style={{color: "red"}}>{errorMessage}</p>
+          </form>
+        )
+      }
+
+      function CatItem(props) {
+        return (
+          <li>
+            <img src={props.img} style={{ width: '150px'}}/>
+          </li>
+        )
+      }
+
+      const App = () => {
+        const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+        const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
+        const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
+        const cats = [CAT1, CAT2, CAT3]
+        const [counter, setCounter] = React.useState(jsonLocalStorage.getItem("counter"));
+        const [mainCat, setMainCat] = React.useState(CAT1);
+        const [favorites, setFavorites] = React.useState(jsonLocalStorage.getItem("favorites") || []);
+        
+
+        function updateMainCat() {
+          setMainCat(CAT2)
+          const nextCounter = counter + 1
+          setCounter(counter + 1)
+          jsonLocalStorage.setItem('counter', nextCounter);
+        }
+
+        function handleHeartClick() {
+          const nextFavorites = [...favorites, mainCat];
+          setFavorites(nextFavorites)
+          jsonLocalStorage.setItem('favorites', nextFavorites);
+        }
+        return (
+          <div>
+            <Title>{counter}번째 고양이 가라사대</Title>
+            <Form updateMainCat={updateMainCat}/>
+            <MainCard img={mainCat} onHeartClick={handleHeartClick}/>
+            <Favorites favorites={favorites}/>
+          </div>
+        )
+      }
+
+      
+      ReactDOM.render(<App />, 여기다가그려);
     </script>
   </body>
 </html>
