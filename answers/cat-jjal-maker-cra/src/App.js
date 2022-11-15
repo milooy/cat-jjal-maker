@@ -92,10 +92,10 @@ const MainCard = ({ img, onHeartClick, alreadyFavorite }) => {
 };
 
 const App = () => {
-  const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
-  const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
+  const CAT1 = "https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react";
+  const CAT2 = "https://cataas.com/cat/BxqL2EjFmtxDkAm2/says/inflearn";
   const CAT3 =
-    "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
+    "https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript";
 
   const [counter, setCounter] = React.useState(() => {
     return jsonLocalStorage.getItem("counter");
