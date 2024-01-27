@@ -51,7 +51,7 @@
           `${OPEN_API_DOMAIN}/cat/says/${text}?json=true`
         );
         const responseJson = await response.json();
-        return `${OPEN_API_DOMAIN}/${responseJson.url}`;
+        return `${OPEN_API_DOMAIN}/cat/${responseJson._id}/says/${text}`;
       };
 
       const Title = (props) => {

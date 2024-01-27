@@ -52,7 +52,7 @@
           `https://dog.ceo/api/breeds/image/random`
         );
         const responseJson = await response.json();
-        return `${OPEN_API_DOMAIN}/${responseJson.url}`;
+        return `${responseJson.url}`; // NOTE: API 스펙 변경으로 강의 영상과 다른 URL로 변경했습니다.
       };
 
       const Title = (props) => {
